@@ -175,17 +175,3 @@ hr {
 .no-passwords-img-bg {
   text-align: center;
 }
-
-.initial {
-  height: 30px;
-  width: 30px;
-  border-radius: 50px;
-  background-color: orange;
-}
-
-.password-bg {
-  display: flex;
-  flex-direction: row;
-  border-style: solid;
-  border-color: white;
-}
