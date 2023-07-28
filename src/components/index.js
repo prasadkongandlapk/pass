@@ -1,33 +1,46 @@
 import './index.css'
 
 const Password = props => {
-  const {passwordDetails, onDelete} = props
+  const {passwordDetails, checkbox, onDelete} = props
   const {username, password, website, id} = passwordDetails
 
   const onClickDelete = () => {
     onDelete(id)
   }
 
+  const showPassword =
+    checkbox === true ? (
+      <p>{password}</p>
+    ) : (
+      <img
+        className="stars"
+        src="https://assets.ccbp.in/frontend/react-js/password-manager-stars-img.png "
+        alt="stars"
+      />
+    )
+
   return (
-    <div className="password-bg">
-      <div className="initial">
-        <p>{username[0]}</p>
+    <li>
+      <div className="password-bg">
+        <div className="initial">
+          <p>{username[0]}</p>
+        </div>
+        <div>
+          <p>{website}</p>
+          <p>{username}</p>
+          {showPassword}
+        </div>
+        <div>
+          <button className="delete-btn" type="button" onClick={onDelete}>
+            <img
+              className="img-delete"
+              src="https://assets.ccbp.in/frontend/react-js/password-manager-delete-img.png "
+              alt="delete"
+            />
+          </button>
+        </div>
       </div>
-      <div>
-        <p>{username}</p>
-        <p>{website}</p>
-        <p>{password}</p>
-      </div>
-      <div>
-        <button type="button" onClick={onDelete}>
-          <img
-            className="img-delete"
-            src="https://assets.ccbp.in/frontend/react-js/password-manager-delete-img.png "
-            alt="delete"
-          />
-        </button>
-      </div>
-    </div>
+    </li>
   )
 }
 

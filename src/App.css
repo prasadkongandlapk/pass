@@ -74,10 +74,11 @@ input {
   height: 25px;
   width: 80%;
   margin-right: 30px;
-  color: #b6c3ca;
+  color: #9ba9eb;
   border-style: none;
   font-weight: bold;
   padding-left: 10px;
+  outline: none;
 }
 
 hr {
@@ -158,6 +159,8 @@ hr {
 }
 .input {
   border-radius: 5px;
+  outline: none;
+  border-style: none;
 }
 .checkbox-input {
   height: 12px;
@@ -174,4 +177,9 @@ hr {
 }
 .no-passwords-img-bg {
   text-align: center;
+}
+
+ul {
+  display: flex;
+  flex-direction: row;
 }

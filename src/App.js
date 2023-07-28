@@ -24,12 +24,20 @@ class PasswordManager extends Component {
     searchInput: '',
     passwordsList: initialPasswordsList,
     count: 0,
+    checkbox: false,
   }
 
   onSubmitPassword = event => {
-    event.preventdefault()
+    event.preventDefault()
 
-    const {website, username, password, searchInput, passwordsList} = this.state
+    const {
+      website,
+      count,
+      username,
+      password,
+      searchInput,
+      passwordsList,
+    } = this.state
 
     const initialBgColorClassName = `initial-container ${
       initialContainerBackgroundClassNames[
@@ -58,24 +66,29 @@ class PasswordManager extends Component {
       }))
     }
   }
+
   onChangeSearch = event => {
     this.setState({searchInput: event.target.value})
   }
 
   OnEmptyResult = () => {
     const {count} = this.state
-    if (count === 0) {
-      return (
-        <div className="no-passwords-img-bg">
-          <img
-            className="no-passwords-img"
-            src="https://assets.ccbp.in/frontend/react-js/no-passwords-img.png "
-            alt="no passwords"
-          />
-          <p className="h2">No Passwords</p>
-        </div>
-      )
-    }
+    return (
+      <div className="no-passwords-img-bg">
+        <img
+          className="no-passwords-img"
+          src="https://assets.ccbp.in/frontend/react-js/no-passwords-img.png "
+          alt="no passwords"
+        />
+        <p className="h2">No Passwords</p>
+      </div>
+    )
+  }
+
+  onClickCheckbox = () => {
+    const {checkbox} = this.state
+
+    this.setState(prevState => ({checkbox: !prevState.checkbox}))
   }
 
   onDelete = id => {
@@ -98,10 +111,18 @@ class PasswordManager extends Component {
   }
 
   render() {
-    const {website, username, password, searchInput, passwordsList} = this.state
+    const {
+      website,
+      count,
+      username,
+      password,
+      searchInput,
+      passwordsList,
+      checkbox,
+    } = this.state
 
     const filteredPasswords = passwordsList.filter(eachPassword =>
-      eachPassword.username.toLowerCase().includes(searchInput.toLowerCase()),
+      eachPassword.website.toLowerCase().includes(searchInput.toLowerCase()),
     )
 
     return (
@@ -173,7 +194,7 @@ class PasswordManager extends Component {
           <div className="password-search-bg">
             <div className="passwords-count-bg">
               <h1 className="h2">Your Passwords</h1>
-              <p className="count-bg">0</p>
+              <p className="count-bg">{count}</p>
             </div>
             <div className="input-bg">
               <img
@@ -186,6 +207,7 @@ class PasswordManager extends Component {
                 type="search"
                 placeholder="Search"
                 onChange={this.onChangeSearch}
+                value={searchInput}
               />
             </div>
           </div>
@@ -195,23 +217,27 @@ class PasswordManager extends Component {
               onClick={this.onClickCheckbox}
               className="checkbox-input"
               type="checkbox"
-              name="show"
+              id="show"
             />
             <label className="label-check" value="show" htmlFor="show">
               Show passwords
             </label>
           </div>
 
-          {this.OnEmptyResult()}
-          <ul>
-            {filteredPasswords.map(eachPass => (
-              <Password
-                passwordDetails={eachPass}
-                onDelete={this.onDelete}
-                key={eachPass.id}
-              />
-            ))}
-          </ul>
+          {count === 0 ? (
+            this.OnEmptyResult()
+          ) : (
+            <ul>
+              {filteredPasswords.map(eachPass => (
+                <Password
+                  passwordDetails={eachPass}
+                  onDelete={this.onDelete}
+                  key={eachPass.id}
+                  checkbox={checkbox}
+                />
+              ))}
+            </ul>
+          )}
         </div>
       </div>
     )
